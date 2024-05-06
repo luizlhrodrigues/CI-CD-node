@@ -1,4 +1,4 @@
-name: CI/CD-Node
+name: CI/CD-Node-Teste
 on:
   push:
     branches:
