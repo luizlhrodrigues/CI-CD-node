@@ -46,4 +46,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy site
-        run: echo "Deploy Concluido..."
+        run: echo "Deploy Concluido"
