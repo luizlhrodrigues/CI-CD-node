@@ -1,0 +1,28 @@
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download SonarScanner
+        run: |
+          wget https://cdn3.gnarususercontent.com.br/3361-desenvolvimento-seguro/sonar-scanner-cli-6.0.0.4432-windows.zip
+          unzip sonar-scanner-cli-6.0.0.4432-windows.zip -d $HOME
+          mv $HOME/sonar-scanner-6.0.0.4432-windows $HOME/sonar-scanner
+          
+      - name: Setup SonarScanner environment variables
+        run: |
+          echo "SONAR_SCANNER_HOME=$HOME/sonar-scanner" >> $GITHUB_ENV
+          echo "$HOME/sonar-scanner/bin" >> $GITHUB_PATH
+
+      - name: Run SonarScanner
+        run: |
+          sonar-scanner -X \
+            -Dsonar.projectKey=VollMed \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+        env:
+          SONARQUBE_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
